@@ -20,8 +20,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(express.static(__dirname + '/public'));
+
 app.use(cors());
 app.use('/api', employeeRoute);
+
+
+
+// Connect to Server to Angular 4 index.html
+app.get('*' , (req , res)=>{
+    res.sendFile(path.join(__dirname +  '/public/index.html'));
+})
+
 
 //Create Port
 const port = process.env.PORT || 4000;
@@ -33,6 +43,8 @@ const server = app.listen(port, () => {
 app.use((req, res, next) => {
     next(createError(404));
 });
+
+
 
  // error handler
 app.use(function (err, req, res, next) {
